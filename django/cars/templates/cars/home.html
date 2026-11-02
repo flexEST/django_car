@@ -1,0 +1,768 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AutoLux — Avtomobil Satışı</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #102c50;
+            --primary-dark: #091d35;
+            --accent: #2463eb;
+            --text: #172337;
+            --muted: #7c8798;
+            --bg: #f5f7fa;
+            --white: #ffffff;
+            --border: #e8edf3;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        button, input, select {
+            font: inherit;
+        }
+
+        .container {
+            width: min(1200px, 92%);
+            margin: auto;
+        }
+
+        /* NAVBAR */
+
+        .navbar {
+            background: white;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-inner {
+            height: 78px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 25px;
+        }
+
+        .logo {
+            font-family: 'Manrope', sans-serif;
+            font-size: 26px;
+            font-weight: 800;
+            color: var(--primary);
+            letter-spacing: -1px;
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+
+        .nav-links a {
+            font-size: 14px;
+            font-weight: 600;
+            color: #596579;
+            transition: .2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        .nav-button {
+            background: var(--primary);
+            color: white;
+            padding: 12px 21px;
+            border-radius: 9px;
+            font-size: 13px;
+            font-weight: 700;
+            transition: .2s;
+        }
+
+        .nav-button:hover {
+            background: var(--accent);
+        }
+
+        /* HERO */
+
+        .hero {
+            background: var(--primary-dark);
+            position: relative;
+            overflow: hidden;
+            color: white;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 550px;
+            height: 550px;
+            background: #2463eb;
+            opacity: .12;
+            filter: blur(100px);
+            border-radius: 50%;
+            right: -100px;
+            top: -200px;
+        }
+
+        .hero-inner {
+            position: relative;
+            z-index: 1;
+            padding: 75px 0 100px;
+        }
+
+        .hero-label {
+            display: inline-block;
+            color: #a9c5ff;
+            background: #ffffff12;
+            border: 1px solid #ffffff20;
+            padding: 8px 14px;
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 22px;
+        }
+
+        .hero h1 {
+            font-family: 'Manrope', sans-serif;
+            font-size: clamp(34px, 5vw, 58px);
+            font-weight: 800;
+            line-height: 1.15;
+            letter-spacing: -2px;
+            max-width: 750px;
+        }
+
+        .hero h1 span {
+            color: #80aaff;
+        }
+
+        .hero-description {
+            margin-top: 20px;
+            color: #b8c5d8;
+            font-size: 16px;
+            line-height: 1.7;
+            max-width: 540px;
+        }
+
+        /* SEARCH */
+
+        .search-box {
+            background: white;
+            border-radius: 15px;
+            padding: 22px;
+            margin-top: 45px;
+            box-shadow: 0 15px 50px #0003;
+            color: var(--text);
+        }
+
+        .search-title {
+            font-size: 17px;
+            font-weight: 800;
+            margin-bottom: 18px;
+        }
+
+        .search-fields {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr 1fr auto;
+            gap: 12px;
+        }
+
+        .field label {
+            display: block;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--muted);
+            margin-bottom: 9px;
+        }
+
+        .field input,
+        .field select {
+            width: 100%;
+            height: 48px;
+            padding: 0 12px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: #fafbfd;
+            color: var(--text);
+            outline: none;
+            font-size: 13px;
+        }
+
+        .field input:focus,
+        .field select:focus {
+            border-color: var(--accent);
+        }
+
+        .search-button {
+            align-self: end;
+            height: 48px;
+            padding: 0 25px;
+            border: none;
+            border-radius: 8px;
+            background: var(--accent);
+            color: white;
+            font-weight: 700;
+            cursor: pointer;
+            transition: .2s;
+        }
+
+        .search-button:hover {
+            background: #174bc2;
+        }
+
+        /* MAIN */
+
+        .main {
+            padding: 65px 0;
+        }
+
+        .section-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+            gap: 15px;
+            margin-bottom: 28px;
+        }
+
+        .section-subtitle {
+            color: var(--accent);
+            font-size: 12px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 9px;
+        }
+
+        .section-heading h2 {
+            font-family: 'Manrope', sans-serif;
+            font-size: 29px;
+            letter-spacing: -1px;
+        }
+
+        .result-count {
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        /* CAR CARDS */
+
+        .cars-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .car-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 13px;
+            overflow: hidden;
+            transition: .25s;
+        }
+
+        .car-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px #152d4b12;
+        }
+
+        .car-image {
+            height: 215px;
+            position: relative;
+            overflow: hidden;
+            background: #e9edf3;
+        }
+
+        .car-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: .4s;
+        }
+
+        .car-card:hover .car-image img {
+            transform: scale(1.05);
+        }
+
+        .car-year {
+            position: absolute;
+            top: 14px;
+            left: 14px;
+            background: white;
+            padding: 7px 11px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        .car-content {
+            padding: 19px;
+        }
+
+        .car-brand {
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: .8px;
+            margin-bottom: 6px;
+        }
+
+        .car-title {
+            font-family: 'Manrope', sans-serif;
+            font-size: 20px;
+            font-weight: 800;
+            margin-bottom: 15px;
+        }
+
+        .car-specs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 13px;
+            padding-bottom: 17px;
+            border-bottom: 1px solid var(--border);
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        .car-specs span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .car-bottom {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            padding-top: 17px;
+        }
+
+        .car-price {
+            font-family: 'Manrope', sans-serif;
+            font-size: 21px;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .details-button {
+            background: #edf3ff;
+            color: var(--accent);
+            padding: 10px 13px;
+            border-radius: 7px;
+            font-size: 12px;
+            font-weight: 800;
+            transition: .2s;
+        }
+
+        .details-button:hover {
+            background: var(--accent);
+            color: white;
+        }
+
+        /* EMPTY */
+
+        .empty-state {
+            grid-column: 1 / -1;
+            background: white;
+            padding: 65px 20px;
+            text-align: center;
+            border-radius: 13px;
+            border: 1px solid var(--border);
+        }
+
+        .empty-icon {
+            font-size: 42px;
+            margin-bottom: 15px;
+        }
+
+        .empty-state h3 {
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+
+        .empty-state p {
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .reset-link {
+            display: inline-block;
+            margin-top: 17px;
+            color: var(--accent);
+            font-weight: 700;
+            font-size: 13px;
+        }
+
+        /* FOOTER */
+
+        footer {
+            background: var(--primary-dark);
+            color: white;
+            padding: 35px 0;
+        }
+
+        .footer-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .footer-logo {
+            font-size: 22px;
+            font-weight: 800;
+        }
+
+        .footer-inner p {
+            color: #9cabc0;
+            font-size: 12px;
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 950px) {
+            .search-fields {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .search-button {
+                width: 100%;
+            }
+
+            .cars-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 650px) {
+            .nav-inner {
+                height: 68px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .logo {
+                font-size: 23px;
+            }
+
+            .nav-button {
+                padding: 10px 13px;
+                font-size: 11px;
+            }
+
+            .hero-inner {
+                padding: 55px 0 75px;
+            }
+
+            .hero h1 {
+                letter-spacing: -1px;
+            }
+
+            .hero-description {
+                font-size: 14px;
+            }
+
+            .search-box {
+                padding: 17px;
+                margin-top: 30px;
+            }
+
+            .search-fields {
+                grid-template-columns: 1fr;
+            }
+
+            .cars-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-heading h2 {
+                font-size: 23px;
+            }
+
+            .car-image {
+                height: 230px;
+            }
+
+            .footer-inner {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+
+<header class="navbar">
+    <div class="container nav-inner">
+
+        <a href="/" class="logo">
+            Auto<span>Lux</span>
+        </a>
+
+        <nav class="nav-links">
+            <a href="/">Ana səhifə</a>
+            <a href="#cars">Avtomobillər</a>
+            <a href="#about">Haqqımızda</a>
+        </nav>
+
+        <a href="#cars" class="nav-button">
+            Avtomobillərə bax
+        </a>
+
+    </div>
+</header>
+
+
+<!-- HERO -->
+
+<section class="hero">
+    <div class="container hero-inner">
+
+        <div class="hero-label">
+            PREMIUM AVTOMOBİL PLATFORMASI
+        </div>
+
+        <h1>
+            Xəyalındakı avtomobili
+            <span>burada tap.</span>
+        </h1>
+
+        <p class="hero-description">
+            Sənə uyğun avtomobili kəşf et.
+            Müxtəlif markalar, modellər və sərfəli təkliflər
+            bir platformada.
+        </p>
+
+
+        <!-- SEARCH FORM -->
+
+        <form method="GET" action="/" class="search-box">
+
+            <div class="search-title">
+                Avtomobil axtarışı
+            </div>
+
+            <div class="search-fields">
+
+                <div class="field">
+                    <label>Marka və ya model</label>
+                    <input
+                        type="text"
+                        name="search"
+                        placeholder="Məsələn, BMW X5"
+                        value="{{ search }}"
+                    >
+                </div>
+
+                <div class="field">
+                    <label>Marka</label>
+                    <select name="brand">
+                        <option value="">Bütün markalar</option>
+
+                        {% for item in brands %}
+                        <option value="{{ item }}"
+                            {% if selected_brand == item %}selected{% endif %}>
+                            {{ item }}
+                        </option>
+                        {% endfor %}
+
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label>Yanacaq növü</label>
+                    <select name="fuel">
+                        <option value="">Bütün növlər</option>
+
+                        {% for item in fuels %}
+                        <option value="{{ item }}"
+                            {% if selected_fuel == item %}selected{% endif %}>
+                            {{ item }}
+                        </option>
+                        {% endfor %}
+
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label>Maksimum qiymət (AZN)</label>
+                    <input
+                        type="number"
+                        name="max_price"
+                        placeholder="Məsələn, 50000"
+                        value="{{ max_price }}"
+                        min="0"
+                    >
+                </div>
+
+                <button type="submit" class="search-button">
+                    Axtar →
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+</section>
+
+
+<!-- CAR LIST -->
+
+<main class="main container" id="cars">
+
+    <div class="section-heading">
+
+        <div>
+            <div class="section-subtitle">
+                AVTOMOBİL KATALOQU
+            </div>
+
+            <h2>Son əlavə olunanlar</h2>
+        </div>
+
+        <div class="result-count">
+            {{ cars|length }} avtomobil tapıldı
+        </div>
+
+    </div>
+
+
+    <div class="cars-grid">
+
+        {% for car in cars %}
+
+        <article class="car-card">
+
+            <a href="{% url 'car_detail' car.id %}">
+
+                <div class="car-image">
+
+                    <img
+                        src="{{ car.image.url }}"
+                        alt="{{ car.brand }} {{ car.model }}"
+                        loading="lazy"
+                    >
+
+                    <span class="car-year">
+                        {{ car.year }}
+                    </span>
+
+                </div>
+
+                <div class="car-content">
+
+                    <div class="car-brand">
+                        {{ car.brand }}
+                    </div>
+
+                    <h3 class="car-title">
+                        {{ car.model }}
+                    </h3>
+
+                    <div class="car-specs">
+
+                        <span>◷ {{ car.mileage }} km</span>
+
+                        <span>⛽ {{ car.fuel }}</span>
+
+                        <span>⚙ {{ car.transmission }}</span>
+
+                    </div>
+
+                    <div class="car-bottom">
+
+                        <div class="car-price">
+                            {{ car.price }} ₼
+                        </div>
+
+                        <span class="details-button">
+                            Ətraflı →
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </a>
+
+        </article>
+
+        {% empty %}
+
+        <div class="empty-state">
+
+            <div class="empty-icon">🚗</div>
+
+            <h3>Avtomobil tapılmadı</h3>
+
+            <p>
+                Axtarış şərtlərini dəyiş və yenidən cəhd et.
+            </p>
+
+            <a href="/" class="reset-link">
+                Bütün avtomobillərə bax →
+            </a>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</main>
+
+
+<!-- FOOTER -->
+
+<footer id="about">
+    <div class="container footer-inner">
+
+        <div class="footer-logo">
+            AutoLux
+        </div>
+
+        <p>
+            © 2026 AutoLux. Bütün hüquqlar qorunur.
+        </p>
+
+        <p>
+            Avtomobil seçiminin yeni ünvanı.
+        </p>
+
+    </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,633 @@
+
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ car.brand }} {{ car.model }} | AutoLux</title>
+
+    <style>
+        :root {
+            --primary: #102c50;
+            --dark: #091d35;
+            --accent: #2463eb;
+            --text: #172337;
+            --muted: #7c8798;
+            --bg: #f5f7fa;
+            --border: #e8edf3;
+            --white: #fff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* NAVBAR */
+
+        .navbar {
+            background: var(--white);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 18px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: 800;
+            color: var(--primary);
+            letter-spacing: -1px;
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        .back-link {
+            color: var(--muted);
+            font-size: 14px;
+            font-weight: 600;
+            transition: .2s;
+        }
+
+        .back-link:hover {
+            color: var(--accent);
+        }
+
+        /* MAIN CONTAINER */
+
+        .container {
+            max-width: 1200px;
+            margin: 35px auto;
+            padding: 0 24px;
+        }
+
+        /* BREADCRUMB */
+
+        .breadcrumb {
+            font-size: 13px;
+            color: var(--muted);
+            margin-bottom: 22px;
+        }
+
+        .breadcrumb a {
+            color: var(--accent);
+        }
+
+        .breadcrumb span {
+            margin: 0 8px;
+        }
+
+        /* TITLE */
+
+        .page-title {
+            margin-bottom: 25px;
+        }
+
+        .page-title h1 {
+            font-size: 30px;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        .page-title p {
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        /* DETAILS LAYOUT */
+
+        .details-layout {
+            display: grid;
+            grid-template-columns: 1.6fr 1fr;
+            gap: 25px;
+            align-items: start;
+        }
+
+        /* PHOTO GALLERY */
+
+        .gallery {
+            background: white;
+            padding: 12px;
+            border-radius: 14px;
+            border: 1px solid var(--border);
+        }
+
+        .gallery-main {
+            position: relative;
+            overflow: hidden;
+            border-radius: 9px;
+            background: #e9edf3;
+        }
+
+        .gallery-main img {
+            width: 100%;
+            height: 440px;
+            display: block;
+            object-fit: cover;
+            transition: opacity .2s ease;
+        }
+
+        .gallery-thumbnails {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        .gallery-thumb {
+            height: 75px;
+            padding: 0;
+            border: 2px solid transparent;
+            border-radius: 8px;
+            overflow: hidden;
+            background: #e9edf3;
+            cursor: pointer;
+            transition: .2s;
+        }
+
+        .gallery-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .gallery-thumb:hover {
+            border-color: #9bb8f5;
+        }
+
+        .gallery-thumb.active {
+            border-color: var(--accent);
+        }
+
+        .gallery-caption {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 5px 5px;
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        /* PRICE CARD */
+
+        .price-card {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 25px;
+            position: sticky;
+            top: 95px;
+        }
+
+        .price-label {
+            color: var(--muted);
+            font-size: 13px;
+            margin-bottom: 8px;
+        }
+
+        .price {
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 22px;
+        }
+
+        .price small {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .card-divider {
+            height: 1px;
+            background: var(--border);
+            margin: 20px 0;
+        }
+
+        .specifications-title {
+            font-size: 16px;
+            color: var(--primary);
+            margin-bottom: 16px;
+        }
+
+        .spec-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+
+        .spec-name {
+            color: var(--muted);
+        }
+
+        .spec-value {
+            font-weight: 600;
+            text-align: right;
+        }
+
+        /* CONTACT BUTTON */
+
+        .contact-button {
+            display: block;
+            width: 100%;
+            text-align: center;
+            background: var(--accent);
+            color: white;
+            padding: 15px;
+            border-radius: 9px;
+            font-size: 15px;
+            font-weight: 700;
+            margin-top: 25px;
+            transition: .2s;
+        }
+
+        .contact-button:hover {
+            background: #174fc5;
+            transform: translateY(-2px);
+        }
+
+        /* DESCRIPTION */
+
+        .description-card {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 25px;
+            margin-top: 25px;
+        }
+
+        .description-card h2 {
+            color: var(--primary);
+            font-size: 19px;
+            margin-bottom: 16px;
+        }
+
+        .description-card p {
+            color: #596579;
+            font-size: 14px;
+            line-height: 1.8;
+            white-space: pre-line;
+        }
+
+        /* FOOTER */
+
+        footer {
+            background: var(--dark);
+            color: #c4cedb;
+            padding: 30px 24px;
+            margin-top: 60px;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .footer-logo {
+            font-size: 20px;
+            font-weight: 800;
+            color: white;
+        }
+
+        .footer-logo span {
+            color: #60a5fa;
+        }
+
+        .footer-text {
+            font-size: 13px;
+            color: #94a3b8;
+        }
+
+        /* RESPONSIVE */
+
+        @media(max-width: 850px) {
+            .details-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .price-card {
+                position: static;
+            }
+
+            .gallery-main img {
+                height: 350px;
+            }
+        }
+
+        @media(max-width: 600px) {
+            .nav-container {
+                padding: 16px;
+            }
+
+            .container {
+                padding: 0 15px;
+                margin-top: 22px;
+            }
+
+            .page-title h1 {
+                font-size: 24px;
+            }
+
+            .gallery-main img {
+                height: 240px;
+            }
+
+            .gallery-thumbnails {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 7px;
+            }
+
+            .gallery-thumb {
+                height: 65px;
+            }
+
+            .price-card {
+                padding: 20px;
+            }
+
+            .price {
+                font-size: 28px;
+            }
+
+            .description-card {
+                padding: 20px;
+            }
+
+            .footer-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+
+    <header class="navbar">
+        <div class="nav-container">
+
+            <a href="{% url 'home' %}" class="logo">
+                Auto<span>Lux</span>
+            </a>
+
+            <a href="{% url 'home' %}" class="back-link">
+                ← Elanlara qayıt
+            </a>
+
+        </div>
+    </header>
+
+
+    <!-- MAIN CONTENT -->
+
+    <main class="container">
+
+        <!-- BREADCRUMB -->
+
+        <div class="breadcrumb">
+            <a href="{% url 'home' %}">Ana səhifə</a>
+            <span>/</span>
+            {{ car.brand }} {{ car.model }}
+        </div>
+
+
+        <!-- CAR TITLE -->
+
+        <div class="page-title">
+
+            <h1>{{ car.brand }} {{ car.model }}</h1>
+
+            <p>
+                {{ car.year }} model ·
+                {{ car.mileage|floatformat:0 }} km
+            </p>
+
+        </div>
+
+
+        <!-- DETAILS LAYOUT -->
+
+        <div class="details-layout">
+
+            <!-- PHOTO GALLERY -->
+
+            <div class="gallery">
+
+                <div class="gallery-main">
+
+                    <img
+                        id="mainGalleryImage"
+                        src="{{ car.image.url }}"
+                        alt="{{ car.brand }} {{ car.model }}"
+                    >
+
+                </div>
+
+
+                <!-- THUMBNAILS -->
+
+                <div class="gallery-thumbnails">
+
+                    <!-- Əsas şəkil -->
+
+                    <button
+                        type="button"
+                        class="gallery-thumb active"
+                        onclick="changeImage(this)"
+                    >
+                        <img src="{{ car.image.url }}" alt="Əsas şəkil">
+                    </button>
+
+
+                    <!-- Əlavə şəkillər -->
+
+                    {% for photo in car.gallery.all %}
+
+                    <button
+                        type="button"
+                        class="gallery-thumb"
+                        onclick="changeImage(this)"
+                    >
+                        <img
+                            src="{{ photo.image.url }}"
+                            alt="{{ car.brand }} {{ car.model }}"
+                        >
+                    </button>
+
+                    {% endfor %}
+
+                </div>
+
+
+                <!-- GALLERY CAPTION -->
+
+                <div class="gallery-caption">
+
+                    <span>{{ car.brand }} {{ car.model }}</span>
+
+                    <span>{{ car.gallery.count|add:1 }} şəkil</span>
+
+                </div>
+
+            </div>
+
+
+            <!-- PRICE AND SPECIFICATIONS -->
+
+            <aside class="price-card">
+
+                <div class="price-label">
+                    Avtomobilin qiyməti
+                </div>
+
+                <div class="price">
+                    {{ car.price|floatformat:0 }}
+                    <small>AZN</small>
+                </div>
+
+
+                <div class="card-divider"></div>
+
+
+                <h2 class="specifications-title">
+                    Avtomobil haqqında
+                </h2>
+
+
+                <div class="spec-row">
+                    <span class="spec-name">Marka</span>
+                    <span class="spec-value">{{ car.brand }}</span>
+                </div>
+
+                <div class="spec-row">
+                    <span class="spec-name">Model</span>
+                    <span class="spec-value">{{ car.model }}</span>
+                </div>
+
+                <div class="spec-row">
+                    <span class="spec-name">Buraxılış ili</span>
+                    <span class="spec-value">{{ car.year }}</span>
+                </div>
+
+                <div class="spec-row">
+                    <span class="spec-name">Yürüş</span>
+                    <span class="spec-value">
+                        {{ car.mileage|floatformat:0 }} km
+                    </span>
+                </div>
+
+                <div class="spec-row">
+                    <span class="spec-name">Yanacaq</span>
+                    <span class="spec-value">{{ car.fuel }}</span>
+                </div>
+
+                <div class="spec-row">
+                    <span class="spec-name">Sürətlər qutusu</span>
+                    <span class="spec-value">{{ car.transmission }}</span>
+                </div>
+
+
+                <a href="tel:+994000000000" class="contact-button">
+                    Satıcı ilə əlaqə saxla
+                </a>
+
+            </aside>
+
+        </div>
+
+
+        <!-- DESCRIPTION -->
+
+        <section class="description-card">
+
+            <h2>Avtomobilin təsviri</h2>
+
+            <p>{{ car.description }}</p>
+
+        </section>
+
+    </main>
+
+
+    <!-- FOOTER -->
+
+    <footer>
+
+        <div class="footer-container">
+
+            <div class="footer-logo">
+                Auto<span>Lux</span>
+            </div>
+
+            <div class="footer-text">
+                © {% now "Y" %} AutoLux. Bütün hüquqlar qorunur.
+            </div>
+
+        </div>
+
+    </footer>
+
+
+    <!-- GALLERY JAVASCRIPT -->
+
+    <script>
+
+        function changeImage(button) {
+
+            const mainImage = document.getElementById('mainGalleryImage');
+
+            const thumbnailImage = button.querySelector('img');
+
+            // Əsas şəkli dəyiş
+
+            mainImage.src = thumbnailImage.src;
+
+            // Bütün şəkillərdən active sinfini sil
+
+            document.querySelectorAll('.gallery-thumb').forEach(item => {
+
+                item.classList.remove('active');
+
+            });
+
+            // Seçilmiş şəkli aktiv et
+
+            button.classList.add('active');
+
+        }
+
+    </script>
+
+</body>
+</html>
